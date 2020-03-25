@@ -1,0 +1,23 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'init' ]
+2 info using npm@3.5.2
+3 info using node@v8.10.0
+4 verbose stack TypeError: Cannot read property 'setRawMode' of null
+4 verbose stack     at ReadStream.setRawMode (tty.js:59:16)
+4 verbose stack     at Interface._setRawMode (readline.js:243:16)
+4 verbose stack     at Interface.close (readline.js:367:10)
+4 verbose stack     at ReadStream.ontermend (readline.js:156:10)
+4 verbose stack     at emitNone (events.js:111:20)
+4 verbose stack     at ReadStream.emit (events.js:208:7)
+4 verbose stack     at endReadableNT (_stream_readable.js:1064:12)
+4 verbose stack     at _combinedTickCallback (internal/process/next_tick.js:138:11)
+4 verbose stack     at process._tickCallback (internal/process/next_tick.js:180:9)
+5 verbose cwd /var/www/aquarela/wp-content/themes/aquarela-template
+6 error Linux 5.3.0-42-generic
+7 error argv "/usr/bin/node" "/usr/bin/npm" "init"
+8 error node v8.10.0
+9 error npm  v3.5.2
+10 error Cannot read property 'setRawMode' of null
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]
