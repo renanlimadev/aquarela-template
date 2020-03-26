@@ -1,7 +1,7 @@
 {
   "name": "aquarela-template",
   "version": "1.0.0",
-  "description": "Template oficial para a loja virtual Aquarela Fashion Kids",
+  "description": "Template oficial para a loja virtual Aquarela Kids Store",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
