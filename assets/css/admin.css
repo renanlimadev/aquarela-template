@@ -1,0 +1,20 @@
+/*
+Estilo para seção administrativa
+*/
+body.login{
+	background-image: url('../images/admin-back.png');
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+ 
+.login h1 a{
+	background-image: url('../icons/admin.svg');
+	-moz-background-size: contain;
+	-o-background-size: contain;
+	-webkit-background-size: contain;
+	background-size: contain;
+	width: 98px;
+	height: 98px;
+}

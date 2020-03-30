@@ -24,5 +24,5 @@ function compilandoSass()
 //Função que assiste as mudanças de código
 function watch()
 {
-	gulp.watch("sass/**/*.scss", compilandoSass);
+	gulp.watch("src/sass/**/*.scss", compilandoSass);
 }
