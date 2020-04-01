@@ -103,8 +103,6 @@ function aquarela_scripts(){
 
     wp_enqueue_script('popperJs', get_template_directory_uri(). '/assets/js/popper.js/popper.min.js', array(), '1.0.0', true);
 
-    wp_enqueue_style('bootstrapCss', get_template_directory_uri().'/assets/css/bootstrap.min.css', array(), '1.0.0', 'all');
-
     wp_enqueue_style('AquarelaCss', get_template_directory_uri().'/assets/css/aquarela-style.css', array(), '1.0.0', 'all');
 }
 

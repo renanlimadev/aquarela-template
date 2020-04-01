@@ -16,7 +16,7 @@ gulp.task("sass", compilandoSass);
 function compilandoSass()
 {
 	return gulp
-	.src("sass/**/*.scss")
+	.src("src/sass/**/*.scss")
 	.pipe(sass({outputStyle: "compressed"}).on("error", sass.logError))
 	.pipe(gulp.dest("assets/css"));
 }
