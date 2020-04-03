@@ -11,13 +11,6 @@
 
 /**
  * 
- * Suporte para o plugin WooCommerce
- * 
- */
-add_theme_support('woocommerce');
-
-/**
- * 
  * Suporte para miniaturas
  *  
  */
@@ -97,7 +90,7 @@ function aquarela_scripts(){
     wp_enqueue_script('bootstrapJs', get_template_directory_uri(). '/assets/js/bootstrap/bootstrap.min.js', array(), '1.0.0', false);
 
 
-    wp_enqueue_script('AquarelaScript', get_template_directory_uri(). '/assets/js/aquarela-script.js', array(), '1.0.0', false);
+    wp_enqueue_script('AquarelaScript', get_template_directory_uri(). '/assets/js/aquarela-script.js', array(), '1.0.0', true);
 
     wp_enqueue_script('fontAwesomeJs', get_template_directory_uri(). '/assets/js/fontawesome/fontawesome.min.js', array(), '1.0.0', true);
 

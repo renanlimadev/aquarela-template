@@ -9,7 +9,7 @@
  * 
  */
 get_header();?>
-<main class="container-fluid" role="main">
+<main class="container-fluid pt-2" role="main">
     <?php 
         if(have_posts()):
             while(have_posts()):

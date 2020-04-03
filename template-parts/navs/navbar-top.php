@@ -9,15 +9,20 @@
  * 
  */?>
 <nav class="navbar navbar-expand-md navbar-dark bg-aqua py-0" role="navigation">
-    <?php 
-        wp_nav_menu(
-              array(
-                'theme_location' => 'top',
-                'container'      => false,
-                 'menu_class'     => 'navbar-nav mr-auto ml-auto',
-                'menu_id'        => 'top-navbar',
-                'fallback_cb'    => false
-            )
-        );
-    ?>
+    <button class="navbar-toggler text-center py-1" type="button" data-toggle="collapse" data-target="#navbarToCollapse" aria-controls="navbarToCollapse" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToCollapse">
+        <?php 
+            wp_nav_menu(
+                array(
+                    'theme_location' => 'top',
+                    'container'      => false,
+                    'menu_class'     => 'navbar-nav navbar-top align-items-center mr-auto ml-auto',
+                    'menu_id'        => 'top-navbar',
+                    'fallback_cb'    => false
+                )
+            );
+        ?>
+    </div>
 </nav>
