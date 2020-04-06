@@ -19,7 +19,7 @@
         <div class="sticky-top">
             <header class="container-fluid bg-light py-2" role="banner">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-2 align-items-center">
                         <a class="navbar-brand" href="<?php echo esc_url(home_url('/'));?>">
                             <img class="logo-aqua" src="<?php bloginfo('template_url');?>/assets/icons/aquarela-logo.svg" alt="Logotipo oficial Aquarela Kids Store"/>
                         </a>

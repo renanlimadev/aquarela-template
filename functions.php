@@ -216,6 +216,19 @@ add_action('admin_bar_menu', 'remove_logo_dash', 100);
 
 /**
  * 
+ * Imprimi a imagem de miniatura
+ * 
+ */
+function aquarela_print_thumbnail(){
+    if(has_post_thumbnail()):
+        the_post_thumbnail('post-thumbnail', ['class' => 'card-img-top product-img']);
+    else:?>
+        <img class="card-img-top product-img" src="<?php bloginfo('template_url')?>/assets/images/default-thumbnail.png" alt="Miniatura padrão"/>
+    <?php endif;
+}
+
+/**
+ * 
  * Adiciona a meta tag de rastreamento do Analytics
  * 
  */
