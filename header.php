@@ -29,11 +29,23 @@
                     </div>
                     <div class="col-md-3 my-auto">
                         <div class="row text-center">
-                            <div class="col-6">
-                                <i class="market-icon fas fa-user"></i>
+                            <div class="col-6 header-user">
+                                <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="market-icon fas fa-user"></i></a>
+                                <?php 
+                                    if(!is_user_logged_in()):
+                                        get_template_part('template-parts/navs/navbar', 'login');
+                                    else:
+                                         get_template_part('template-parts/navs/navbar', 'logged');
+                                    endif;
+                                ?>
                             </div>
-                            <div class="col-6">
-                                <i class="market-icon fas fa-shopping-cart"></i>
+                            <div class="col-6 header-user">
+                                <a class="dropdown-toggle" role="button" id="dropdownCartLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="market-icon fas fa-shopping-cart"></i></a>
+                                <?php 
+                                    if(WC()->cart->get_cart_contents_count() == 0):
+                                        get_template_part('template-parts/carts/cart', 'empty');
+                                    endif;
+                                ?>
                             </div>
                         </div>
                     </div>

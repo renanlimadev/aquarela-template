@@ -85,16 +85,15 @@ require_once get_template_directory(). '/inc/functions/woocommerce-functions.php
  */
 function aquarela_scripts(){
     
+    wp_enqueue_script('popperJs', get_template_directory_uri(). '/assets/js/popper.js/popper.min.js', array(), '1.0.0', false);
+
     wp_enqueue_script('jQuerySlim', get_template_directory_uri(). '/assets/js/jquery/jquery.slim.min.js', array(), '1.0.0', false);
 
     wp_enqueue_script('bootstrapJs', get_template_directory_uri(). '/assets/js/bootstrap/bootstrap.min.js', array(), '1.0.0', false);
 
-
     wp_enqueue_script('AquarelaScript', get_template_directory_uri(). '/assets/js/aquarela-script.js', array(), '1.0.0', true);
 
     wp_enqueue_script('fontAwesomeJs', get_template_directory_uri(). '/assets/js/fontawesome/fontawesome.min.js', array(), '1.0.0', true);
-
-    wp_enqueue_script('popperJs', get_template_directory_uri(). '/assets/js/popper.js/popper.min.js', array(), '1.0.0', true);
 
     wp_enqueue_style('AquarelaCss', get_template_directory_uri().'/assets/css/aquarela-style.css', array(), '1.0.0', 'all');
 }
@@ -226,6 +225,22 @@ function aquarela_print_thumbnail(){
         <img class="card-img-top product-img" src="<?php bloginfo('template_url')?>/assets/images/default-thumbnail.png" alt="Miniatura padrão"/>
     <?php endif;
 }
+
+/**
+ * 
+ * Imprimi o favicon
+ * 
+ */
+function aquarela_favicon(){
+    echo '
+        <link rel="apple-touch-icon" sizes="180x180" href="'. get_template_directory_uri(). '/assets/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="'. get_template_directory_uri(). '/assets/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="'. get_template_directory_uri(). '/assets/icons/favicon-16x16.png">
+        <link rel="manifest" href="'. get_template_directory_uri(). '/assets/icons/site.webmanifest">
+    ';
+}
+
+add_action('wp_head', 'aquarela_favicon');
 
 /**
  * 

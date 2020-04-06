@@ -10,15 +10,25 @@
  */?>
         <footer class="container-fluid bg-aqua-blue text-white pt-5" role="contentinfo">
             <div class="row mt-1 px-1">
-                <div class="col-md-6 pt-1 pb-2 pl-2">                    
-                        <p class="py-1 empresa">AQUARELA COMERCIO DE VESTUARIOS E ACESSOIOS EIRELI ME<br/>21.865.842/0002-67<br/>Av. Nossa Senhora de Lourdes, 63 - Jardim das Américas, Curitiba/PR</p>
-                        <p class="py-1 empresa">Contato:<br/>E-mail: contato@aquarelastore.com.br<br/>Telefone: (41) 3311-1689<br/>WhatsApp: +55 41 98760-2324</p>
-                        <h4 class="title-footer font-weight-bold">Nos siga nas redes sociais</h4>
-                        <ul class="nav social-navbar">
-                            <li class="nav-item"><a class="nav-link" href="https://www.facebook.com/AquarelaKidsStore/" target="_blank"><i class="fab fa-facebook"></i></a></li>
-                            <li class="nav-item"><a class="nav-link" href="https://www.instagram.com/aquarelakidsstore/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                            <li class="nav-item"><a class="nav-link" href="https://wa.me/5541987602324" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
-                        </ul>
+                <div class="col-md-6 pt-1 pb-2 pl-2">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <a class="footer-brand img-fluid pb-2" href="<?php esc_url(home_url('/'));?>"><img src="<?php bloginfo('template_url');?>/assets/icons/aquarela-logo-branca.svg" alt="Logomarca branco para rodapé"/></a>
+                        </div>
+                    </div>
+                    <div class="row text-center py-3">
+                        <div class="col-12">
+                            <h4 class="title-footer font-weight-bold">Nos siga nas redes sociais</h4>                    
+                            <ul class="nav social-navbar justify-content-center">
+                                <li class="nav-item"><a class="nav-link" href="https://www.facebook.com/AquarelaKidsStore/" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                                <li class="nav-item"><a class="nav-link" href="https://www.instagram.com/aquarelakidsstore/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                <li class="nav-item"><a class="nav-link" href="https://wa.me/5541987602324" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="py-1 empresa">AQUARELA COMERCIO DE VESTUARIOS E ACESSOIOS EIRELI ME<br/>21.865.842/0002-67<br/>Av. Nossa Senhora de Lourdes, 63 - Jardim das Américas, Curitiba/PR</p>
+                    <p class="py-1 empresa">Contato:<br/>E-mail: contato@aquarelastore.com.br<br/>Telefone: (41) 3311-1689<br/>WhatsApp: +55 41 98760-2324</p>
+                    
                 </div>
                 <div class="col-md-3 pt-2 p-1 pl-2">
                     <h4 class="title-footer pb-1 font-weight-bold">Sobre a empresa</h4>
