@@ -8,6 +8,7 @@
  * @since 1.0.0
  * 
  */
+
 get_header();?>
 <main class="container-fluid mt-3 woocommerce-main" role="main">
     <h1 class="main-title text-center font-weight-bold py-3">PRODUTOS EM DESTAQUE</h1>

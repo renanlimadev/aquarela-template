@@ -111,7 +111,9 @@ function aquarela_register_menus(){
             'top'     => __('Menu Principal'),
             'right'   => __('Menu Lateral'),
             'footer1' => __('Primeiro Menu de Rodapé'),
-            'footer2' => __('Segundo Menu de Rodapé')
+            'footer2' => __('Segundo Menu de Rodapé'),
+            'cart'    => __('Menu para Carrinho de Compras'),
+            'user'    => __('Menu para cliente logado')
         )
     );
 }
