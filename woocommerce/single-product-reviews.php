@@ -22,10 +22,10 @@ endif;?>
 			$count = $product->get_review_count();
 			if ( $count && wc_review_ratings_enabled() ) {
 				/* translators: 1: reviews count 2: product name */
-				$reviews_title = sprintf( esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
+				$reviews_title = sprintf( esc_html( _n( '%1$s comentário para %2$s', '%1$s avaliações para %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
 				echo apply_filters( 'woocommerce_reviews_title', $reviews_title, $count, $product ); // WPCS: XSS ok.
 			} else {
-				esc_html_e( 'Reviews', 'woocommerce' );
+				esc_html_e( 'Comentários', 'woocommerce' );
 			}
 			?>
 		</h2>
@@ -52,7 +52,7 @@ endif;?>
 			endif;
 			?>
 		<?php else : ?>
-			<p class="woocommerce-noreviews"><?php esc_html_e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
+			<p class="woocommerce-noreviews"><?php esc_html_e( 'Sem comentários', 'woocommerce' ); ?></p>
 		<?php endif; ?>
 	</div>
 
@@ -63,13 +63,13 @@ endif;?>
 				$commenter    = wp_get_current_commenter();
 				$comment_form = array(
 					/* translators: %s is product title */
-					'title_reply'         => have_comments() ? esc_html__( 'Add a review', 'woocommerce' ) : sprintf( esc_html__( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+					'title_reply'         => have_comments() ? esc_html__('Novo comentário', 'woocommerce' ) : sprintf(esc_html__('Seja o primeiro a falar sobre o produto &nbsp; &ldquo;%s&rdquo;', 'woocommerce'), get_the_title()),
 					/* translators: %s is product title */
-					'title_reply_to'      => esc_html__( 'Leave a Reply to %s', 'woocommerce' ),
+					'title_reply_to'      => 'Responder %s',
 					'title_reply_before'  => '<span id="reply-title" class="comment-reply-title">',
 					'title_reply_after'   => '</span>',
 					'comment_notes_after' => '',
-					'label_submit'        => esc_html__( 'Submit', 'woocommerce' ),
+					'label_submit'        => 'Enviar',
 					'logged_in_as'        => '',
 					'comment_field'       => '',
 				);
@@ -77,13 +77,13 @@ endif;?>
 				$name_email_required = (bool) get_option( 'require_name_email', 1 );
 				$fields              = array(
 					'author' => array(
-						'label'    => __( 'Name', 'woocommerce' ),
+						'label'    => 'Nome',
 						'type'     => 'text',
 						'value'    => $commenter['comment_author'],
 						'required' => $name_email_required,
 					),
 					'email'  => array(
-						'label'    => __( 'Email', 'woocommerce' ),
+						'label'    => 'E-mail',
 						'type'     => 'email',
 						'value'    => $commenter['comment_author_email'],
 						'required' => $name_email_required,
@@ -122,7 +122,7 @@ endif;?>
 					</select></div>';
 				}
 
-				$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . '&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p>';
+				$comment_form['comment_field'] .= '<form class="comment-form-comment form-group"><label for="comment">' . esc_html__( 'Seu comentário', 'woocommerce' ) . '&nbsp;</label><textarea class="form-control" id="comment" name="comment" cols="45" rows="8" required></textarea></form>';
 
 				comment_form( apply_filters( 'woocommerce_product_review_comment_form_args', $comment_form ) );
 				?>
