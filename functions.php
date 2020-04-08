@@ -250,3 +250,10 @@ add_action('wp_head', 'aquarela_favicon');
 function gtag_analytics(){
     // Adicione o código aqui
 }
+
+/**
+ * 
+ * Remove a barra superior quando logado
+ * 
+ */
+remove_action( 'wp_footer', 'wp_admin_bar_render', 10000 );

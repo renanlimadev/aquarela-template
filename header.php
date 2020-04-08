@@ -16,7 +16,7 @@
         <?php wp_head();?>
     </head>
     <body <?php body_class();?>>
-        <div class="sticky-top">
+        <div class="sticky-top" id="topBanner">
             <header class="container-fluid bg-light py-2" role="banner">
                 <div class="row">
                     <div class="col-md-2 align-items-center">
@@ -42,8 +42,10 @@
                             <div class="col-6 header-user">
                                 <a class="dropdown-toggle" role="button" id="dropdownCartLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="market-icon fas fa-shopping-cart"></i></a>
                                 <?php 
-                                    if(WC()->cart->get_cart_contents_count() == 0):
+                                    if(WC()->cart->is_empty()):
                                         get_template_part('template-parts/carts/cart', 'empty');
+                                    else:
+                                        get_template_part('template-parts/carts/cart', 'shop');
                                     endif;
                                 ?>
                             </div>

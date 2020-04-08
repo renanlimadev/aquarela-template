@@ -15,13 +15,22 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
     background-color: #F099A9;
 }
 
-.bg-aqua-blue{
-    background-color: #58C2C0;
-}
-
 .market-icon{
     font-size: 2.25rem;
     color: #F099A9;
+    transition: tranform 4s;
+    &:hover{
+        color: #58C2C0;
+        transform: scale(1.2);
+    }
+    &focus{
+        color: #58C2C0;
+    }
+
+}
+
+.shadow-aqua{
+    box-shadow: 6px 0px 10px rgb(139, 139, 139);
 }
 
 .aqua-search{
@@ -61,23 +70,32 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
     .nav-item{
         .nav-link{
             font-size: 1.75rem;
-            color: rgb(235, 235, 235);
-            transition: 0.2s;
+            transition: transform .5s;
             &:hover{
-                color: #F099A9;
+                transform: scale(1.2);
             }
+        }
+        .facebook{
+            color: #3B5998;
+        }
+        .instagram{
+            color: #DD2A7B;
+        }
+        .whatsapp{
+            color: #4FCE5D;
         }
     }
 }
 
 .title-footer{
     font-size: 1.25rem !important;
+    color: #58C2C0 !important;
 }
 
 .nav-footer1{
     .nav-item{
         .nav-link{
-            color: rgb(235, 235, 235);
+            color: #58C2C0;
             padding: 1px !important;
             transition: 0.2s;
             &:hover{
@@ -90,7 +108,7 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 .nav-footer2{
     .nav-item{
         .nav-link{
-            color: rgb(235, 235, 235);
+            color: #58C2C0;
             padding: 1px !important;
             transition: 0.2s;
             &:hover{
@@ -102,6 +120,7 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 
 .empresa{
     font-size: 0.9rem;
+    color: rgb(37, 37, 37) !important;
 }
 
 .navbar-top{
@@ -123,6 +142,10 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 
 .product-card{
     border-radius: 10pt !important;
+    transition: transform .8s;
+    &:hover{
+        transform: scale(1.1);
+    }
 }
 
 .product-img{
@@ -162,26 +185,41 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 
 .form-login{
     border: 1px solid #F099A9 !important;
-    border-radius: 4pt;
+    border-radius: none !important;
+    background-color: #F099A9 !important;
     .login-text{
-        color: #F099A9;
+        color: white;
         font-size: 1rem !important;
     }
     .aqua-login{
-        border: 1pt solid #F099A9 !important;
+        border: 1pt solid white !important;
         border-radius: 8pt;
-        color: #F099A9 !important;
         background-color: transparent !important;
         &:focus{
             outline: 0 !important;
             background-color: transparent !important;
+        }
+        &::-webkit-input-placeholder {
+            color: white;
+        }
+          
+        &:-moz-placeholder { /* Firefox 18- */
+            color: white;  
+        }
+          
+        &::-moz-placeholder {  /* Firefox 19+ */
+            color: white;  
+        }
+          
+        &:-ms-input-placeholder {  
+            color: white;  
         }
     }
 }
 
 .link-cadastro{
     text-decoration: none !important;
-    color: #F099A9 !important;
+    color: white !important;
     transition: .2s;
     &:hover{
         color: rgb(39, 39, 39) !important;
@@ -191,7 +229,7 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 .btn-login{
     border: none !important;
     background-color: transparent !important;
-    color: #F099A9 !important;
+    color: white !important;
     transition: .2s;
     &:hover{
         color: rgb(39, 39, 39) !important;
@@ -202,5 +240,9 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
     .dropdown-toggle::after{
         display: none !important;
     }
+}
+
+.border-footer{
+    border-top: 8px solid #58C2C0 !important;
 }
 
