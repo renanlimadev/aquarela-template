@@ -70,12 +70,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row py-2 bg-info">
+            <div class="row py-2 bg-aqua">
                 <div class="col-md-6 text-center pt-1">
                     <h6 class="copy-title">&copy; 2020. Todos os direitos reservados</h6>
                 </div>
                 <div class="col-md-6 text-center pt-1">
-                    <h6 class="dev-title"><span class="mt-1">Criado com carinho por</span>&nbsp;<a class="dev-logo" href="https://renandev.com.br"><img class="img-fluid" src="<?php bloginfo('template_url');?>/assets/icons/logo-dev.svg" alt="Link para o site do desenvolvedor"/></a></h6>
+                    <h6 class="dev-title"><span class="mt-1">Criado com carinho por</span>&nbsp;<a class="dev-logo" href="https://renandev.com.br">RenanDev</a></h6>
                 </div>
             </div>
         </footer>

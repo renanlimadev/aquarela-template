@@ -17,7 +17,7 @@
     </head>
     <body <?php body_class();?>>
         <div class="sticky-top" id="topBanner">
-            <header class="container-fluid bg-light py-2" role="banner">
+            <header class="container-fluid bg-white py-2" role="banner">
                 <div class="row">
                     <div class="col-md-2 align-items-center">
                         <a class="navbar-brand" href="<?php echo esc_url(home_url('/'));?>">
@@ -45,7 +45,7 @@
                                     if(WC()->cart->is_empty()):
                                         get_template_part('template-parts/carts/cart', 'empty');
                                     else:
-                                        get_template_part('template-parts/carts/cart', 'shop');
+                                        //get_template_part('template-parts/carts/cart', 'shop');
                                     endif;
                                 ?>
                             </div>

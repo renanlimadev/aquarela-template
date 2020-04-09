@@ -12,7 +12,7 @@
     <button class="navbar-toggler my-1" type="button" data-toggle="collapse" data-target="#navbarToCollapse" aria-controls="navbarToCollapse" aria-expanded="false" aria-label="Alterna navegação">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarToCollapse">
+    <div class="collapse navbar-collapse font-weight-bold" id="navbarToCollapse">
         <?php 
             wp_nav_menu(
                 array(

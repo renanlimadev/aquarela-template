@@ -11,9 +11,9 @@
 
 $query_search = get_search_query();
 
-$search_term = array( 's' => $query_search );
+$search_term = array('s' => $query_search);
 
-$object_search = new WP_Query( $search_term );
+$object_search = new WP_Query($search_term);
 
 $number_results = $object_search->found_posts;
 
