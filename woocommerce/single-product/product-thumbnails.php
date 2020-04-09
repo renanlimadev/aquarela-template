@@ -12,7 +12,7 @@ if(! function_exists( 'wc_get_gallery_image_html')):
 	return;
 endif;
 
-global $product;
+GLOBAL $product;
 
 $attachment_ids = $product->get_gallery_image_ids();
 

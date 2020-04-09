@@ -1,30 +1,22 @@
 <?php
 /**
- * Grouped product add to cart
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/add-to-cart/grouped.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see     https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 4.0.0
+ * 
+ * Adicionar ao carrinho em grupo
+ * 
+ * @package aquarela-template
+ * 
+ * @since 1.0.0
+ * 
  */
 
-defined( 'ABSPATH' ) || exit;
+GLOBAL $product, $post;
 
-global $product, $post;
+do_action('woocommerce_before_add_to_cart_form');?>
 
-do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-
-<form class="cart grouped_form" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+<form class="cart grouped_form" action="<?php echo esc_url( apply_filters('woocommerce_add_to_cart_form_action', $product->get_permalink()));?>" method="post" enctype='multipart/form-data'>
 	<table cellspacing="0" class="woocommerce-grouped-product-list group_table">
 		<tbody>
-			<?php
+			<?php 
 			$quantites_required      = false;
 			$previous_post           = $post;
 			$grouped_product_columns = apply_filters(
@@ -37,29 +29,29 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 				$product
 			);
 
-			do_action( 'woocommerce_grouped_product_list_before', $grouped_product_columns, $quantites_required, $product );
+			do_action('woocommerce_grouped_product_list_before', $grouped_product_columns, $quantites_required, $product);
 
-			foreach ( $grouped_products as $grouped_product_child ) {
-				$post_object        = get_post( $grouped_product_child->get_id() );
-				$quantites_required = $quantites_required || ( $grouped_product_child->is_purchasable() && ! $grouped_product_child->has_options() );
+			foreach($grouped_products as $grouped_product_child){
+				$post_object        = get_post( $grouped_product_child->get_id());
+				$quantites_required = $quantites_required || ( $grouped_product_child->is_purchasable() && ! $grouped_product_child->has_options());
 				$post               = $post_object; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				setup_postdata( $post );
+				setup_postdata($post);
 
-				echo '<tr id="product-' . esc_attr( $grouped_product_child->get_id() ) . '" class="woocommerce-grouped-product-list-item ' . esc_attr( implode( ' ', wc_get_product_class( '', $grouped_product_child ) ) ) . '">';
+				echo '<tr id="product-'. esc_attr( $grouped_product_child->get_id()). '" class="woocommerce-grouped-product-list-item '. esc_attr(implode(' ', wc_get_product_class('', $grouped_product_child))). '">';
 
 				// Output columns for each product.
-				foreach ( $grouped_product_columns as $column_id ) {
-					do_action( 'woocommerce_grouped_product_list_before_' . $column_id, $grouped_product_child );
+				foreach($grouped_product_columns as $column_id){
+					do_action( 'woocommerce_grouped_product_list_before_' . $column_id, $grouped_product_child);
 
-					switch ( $column_id ) {
+					switch($column_id){
 						case 'quantity':
 							ob_start();
 
-							if ( ! $grouped_product_child->is_purchasable() || $grouped_product_child->has_options() || ! $grouped_product_child->is_in_stock() ) {
+							if(! $grouped_product_child->is_purchasable() || $grouped_product_child->has_options() || ! $grouped_product_child->is_in_stock()){
 								woocommerce_template_loop_add_to_cart();
-							} elseif ( $grouped_product_child->is_sold_individually() ) {
-								echo '<input type="checkbox" name="' . esc_attr( 'quantity[' . $grouped_product_child->get_id() . ']' ) . '" value="1" class="wc-grouped-product-add-to-cart-checkbox" />';
-							} else {
+							}elseif($grouped_product_child->is_sold_individually()){
+								echo '<input type="checkbox" name="'. esc_attr( 'quantity[' . $grouped_product_child->get_id(). ']'). '" value="1" class="wc-grouped-product-add-to-cart-checkbox" />';
+							}else{
 								do_action( 'woocommerce_before_add_to_cart_quantity' );
 
 								woocommerce_quantity_input(
