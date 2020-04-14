@@ -11,7 +11,7 @@
 
 GLOBAL $product;
 
-if(! is_a( $product, 'WC_Product')):
+if(! is_a($product, 'WC_Product')):
 	return;
 endif;?>
 

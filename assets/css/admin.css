@@ -10,7 +10,7 @@ body.login{
 }
  
 .login h1 a{
-	background-image: url('../icons/admin.svg');
+	background-image: url('../icons/aquarela-logo.svg');
 	-moz-background-size: contain;
 	-o-background-size: contain;
 	-webkit-background-size: contain;

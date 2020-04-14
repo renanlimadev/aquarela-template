@@ -25,7 +25,7 @@ endif;?>
 <div class="col-md-3 col-6 my-4">
     <li class="card border product-card w-75 shadow">
 
-        <?php aquarela_print_thumbnail();?>
+        <?php aquarela_print_thumbnail('shop');?>
 
         <div class="card-body text-center">
 

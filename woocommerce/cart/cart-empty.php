@@ -7,14 +7,8 @@
  * 
  * @since 1.0.0
  * 
- */
-
-do_action('woocommerce_cart_is_empty');
-
-if(wc_get_page_id('shop') > 0 ):?>
-	<p class="return-to-shop">
-		<a class="button wc-backward" href="<?php echo esc_url(apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop')));?>">
-			<?php esc_html_e('Retorne para a loja', 'woocommerce');?>
-		</a>
-	</p>
-<?php endif;
+ */?>
+<div class="dropdown-menu px-2 py-2 dropdown-menu-right form-login text-center" aria-labelledby="dropdownCartLink">
+	<h4 class="empty-title text-white py-2">Carrinho vazio</h4>
+	<p class="empty-text text-white my-2">Continue navegando</p>
+</div>

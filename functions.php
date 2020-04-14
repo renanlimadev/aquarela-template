@@ -220,12 +220,20 @@ add_action('admin_bar_menu', 'remove_logo_dash', 100);
  * Imprimi a imagem de miniatura
  * 
  */
-function aquarela_print_thumbnail(){
-    if(has_post_thumbnail()):
-        the_post_thumbnail('post-thumbnail', ['class' => 'card-img-top product-img']);
-    else:?>
-        <img class="card-img-top product-img" src="<?php bloginfo('template_url')?>/assets/images/default-thumbnail.png" alt="Miniatura padrão"/>
-    <?php endif;
+function aquarela_print_thumbnail($status){
+    if($status == 'shop'):
+        if(has_post_thumbnail()):
+            the_post_thumbnail('post-thumbnail', ['class' => 'card-img-top product-img']);
+        else:?>
+            <img class="card-img-top product-img" src="<?php bloginfo('template_url')?>/assets/images/default-thumbnail.png" alt="Miniatura padrão"/>
+        <?php endif;
+    elseif('cart'):
+        if(has_post_thumbnail()):
+            the_post_thumbnail('post-thumbnail', ['class' => 'woocommerce-placeholder wp-post-image']);
+        else:?>
+            <img class="woocommerce-placeholder wp-post-image" src="<?php bloginfo('template_url')?>/assets/images/default-thumbnail.png" alt="Miniatura padrão" style="width: 38px; height: 38px;"/>
+        <?php endif;
+    endif;
 }
 
 /**

@@ -11,7 +11,7 @@
 <div class="col-md-3 col-6 my-4">
     <li class="card border product-card w-75 shadow">
 
-        <?php aquarela_print_thumbnail();?>
+        <?php aquarela_print_thumbnail('shop');?>
 
         <div class="card-body text-center">
 
@@ -44,7 +44,7 @@
 
             <div class="row text-center pt-5 pb-1">
                 <div class="col col-sm col-md col-lg col-xl col-prod">
-                    <a class="product-link prod-info font-weight-bold" href="<?php esc_url($product->add_to_cart_url());?>" data-quantity="<?php esc_attr(isset($args['quantity']) ? $args['quantity'] : 1);?>" <?php isset($args['attributes']) ? wc_implode_html_attributes($args['attributes']) : '';?>>COMPRAR</a>
+                    <?php get_template_part('woocommerce/loop/add-to', 'cart');?>
                 </div>
                 <div class="col col-sm col-md col-lg col-xl col-prod">
                     <a class="product-link prod-info font-weight-bold" href="<?php echo get_the_permalink();?>" target="_blank">ESPIAR</a>

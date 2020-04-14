@@ -9,10 +9,10 @@
  * 
  */
 
-get_header( 'shop' );?>
+get_header('shop');?>
 <main class="container-fluid pt-5" role="main">
 	<h1 class="woocommerce-products-header__title page-title main-title text-center font-weight-bold py-3">
-		<?php woocommerce_page_title(); ?>
+		<?php woocommerce_page_title();?>
 	</h1>
 <?php
 if(woocommerce_product_loop()):?>
@@ -21,8 +21,8 @@ if(woocommerce_product_loop()):?>
 			if(wc_get_loop_prop('total')):
 				while(have_posts()):
 					the_post();
-					do_action( 'woocommerce_shop_loop' );
-					wc_get_template_part( 'content', 'product' );
+					do_action('woocommerce_shop_loop');
+					wc_get_template_part('content', 'product');
 				endwhile;
 			endif;
 		?>

@@ -6,13 +6,17 @@
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
 @import '../../node_modules/@fortawesome/fontawesome-free/scss/v4-shims.scss';
 
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body, header, main, footer, section, aside, input, textarea, form, span, ol, ul, li, button, h1, h2, h3, h4, h5, h6, p, a{
-    font-family: 'Baloo Paaji 2', cursive !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 .bg-aqua{
     background-color: #58C2C0;
+}
+
+.bg-aqua-2{
+    background-color: #F099A9;
 }
 
 .market-icon{
@@ -59,7 +63,7 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
         right: 3%;
         transform: translateY(-50%);
         padding: 0;
-        color: #58C2C0 !important;
+        color: #F099A9 !important;
         background-color: transparent !important;
     }
 }
@@ -87,7 +91,7 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 
 .title-footer{
     font-size: 1.25rem !important;
-    color: #58C2C0 !important;
+    color: #F099A9 !important;
 }
 
 .nav-footer1{
@@ -143,8 +147,8 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 }
 
 .main-title{
-    font-size: 1.75rem;
-    color: #58C2C0 !important;
+    font-size: 2rem;
+    color: #F099A9 !important;
 }
 
 .product-card{
@@ -159,12 +163,12 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
     border-top: 0px solid transparent !important;
     border-top-left-radius: 10pt !important;
     border-top-right-radius: 10pt !important;
-    border-bottom: 5px solid #58C2C0;
+    border-bottom: 5px solid #F099A9;
 }
 
 .card-title{
-    color: #58C2C0 !important;
-    font-size: 1.3rem !important;
+    color: #F099A9 !important;
+    font-size: 1.45rem !important;
 }
 
 .stock-aqua{
@@ -190,13 +194,12 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 }
 
 .form-login{
-    border: 1px solid rgb(199, 199, 199) !important;
+    border: none !important;
     border-radius: none !important;
-    background-color: #58C2C0 !important;
-    box-shadow: 4px 0px 10px rgb(199, 199, 199);
+    background-color: #F099A9 !important;
     .login-text{
         color: white;
-        font-size: 1rem !important;
+        font-size: 1.4rem !important;
     }
     .aqua-login{
         border: none !important;
@@ -204,22 +207,37 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
         background-color: white !important;
         &:focus{
             outline: 0 !important;
-            background-color: transparent !important;
         }
-        &::-webkit-input-placeholder {
+        &::-webkit-input-placeholder{
             color: rgb(39, 39, 39);
+            padding-left: 2%;
+            &:focus{
+                padding-left: 2%;
+            }
         }
           
-        &:-moz-placeholder { /* Firefox 18- */
-            color: rgb(39, 39, 39);  
+        &:-moz-placeholder{ /* Firefox 18- */
+            color: rgb(39, 39, 39);
+            padding-left: 2%;
+            &:focus{
+                padding-left: 2%;
+            }
         }
           
-        &::-moz-placeholder {  /* Firefox 19+ */
-            color: rgb(39, 39, 39);  
+        &::-moz-placeholder{  /* Firefox 19+ */
+            color: rgb(39, 39, 39);
+            padding-left: 2%;
+            &:focus{
+                padding-left: 2%;
+            }  
         }
           
-        &:-ms-input-placeholder {  
-            color: rgb(39, 39, 39);  
+        &:-ms-input-placeholder{  
+            color: rgb(39, 39, 39);
+            padding-left: 2%;
+            &:focus{
+                padding-left: 2%;
+            }  
         }
     }
 }

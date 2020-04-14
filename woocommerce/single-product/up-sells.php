@@ -13,7 +13,7 @@ if($upsells):?>
 
 	<section class="up-sells upsells products">
 
-		<h2><?php esc_html_e( 'Você pode gostar&hellip;', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e('Você pode gostar&hellip;', 'woocommerce');?></h2>
 
 		<?php woocommerce_product_loop_start(); ?>
 
