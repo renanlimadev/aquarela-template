@@ -7,14 +7,17 @@
  * 
  * @since 1.0.0
  * 
- */
-
-wp_nav_menu(
-    array(
-        'theme_location' => 'user',
-        'container'      => false,
-        'menu_class'     => 'dropdown-menu px-2 py-2 dropdown-menu-right form-login text-center',
-        'menu_id'        => 'dropdownMenuLink',
-        'fallback_cb'    => false
-    )
-);
+ */?>
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+    <?php 
+        wp_nav_menu(
+            array(
+                'theme_location' => 'user',
+                'container'      => false,
+                'menu_class'     => 'nav form-login',
+                'menu_id'        => 'menu-user',
+                'fallback_cb'    => false
+            )
+        );
+    ?>
+</div>

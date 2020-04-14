@@ -46,7 +46,13 @@
                             </div>
                             <div class="col-6 header-user">
                                 <a class="dropdown-toggle" role="button" id="dropdownCartLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="market-icon fas fa-shopping-cart"></i></a>
-                                <?php get_template_part('template-parts/woocommerce/cart/cart', 'aqua');?>
+                                <?php 
+                                    if(WC()->cart->get_cart_contents_count() == 0):
+                                        get_template_part('woocommerce/cart/cart', 'empty');
+                                    else:
+                                        get_template_part('woocommerce/cart/mini', 'cart');
+                                    endif;
+                                ?>
                             </div>
                         </div>
                     </div>

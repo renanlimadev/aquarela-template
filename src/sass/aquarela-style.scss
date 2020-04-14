@@ -34,6 +34,10 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 
 }
 
+.empty-title{
+    font-size: .9rem !important;
+}
+
 .shadow-aqua{
     box-shadow: 6px 0px 10px rgb(139, 139, 139);
 }
@@ -271,3 +275,24 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
     border-top: 8px solid #58C2C0 !important;
 }
 
+.link-text{
+    color: white !important;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+.link-icon{
+    color: white !important;
+    &:hover{
+        text-decoration: none !important;
+    }
+}
+
+.title-lost{
+    font-size: 1.4rem !important;
+}
+
+.warning-found{
+    font-size: 1.2rem !important;
+}

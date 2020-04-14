@@ -29,7 +29,8 @@ GLOBAL $user;?>
 	</div>
 	<div class="wc-auth-actions py-2">
 		<?php wp_nonce_field('woocommerce-login', 'woocommerce-login-nonce');?>
-		<button type="submit" class="button button-large btn-login wc-auth-login-button" name="login" value="<?php esc_attr_e( 'Login', 'woocommerce' ); ?>"><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
-		<input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
+		<button type="submit" class="button button-large btn-login wc-auth-login-button" name="login" value="<?php esc_attr_e('Login', 'woocommerce');?>"><?php esc_html_e('Login', 'woocommerce');?></button>
+		<input type="hidden" name="redirect" value="<?php echo esc_url(wc_get_checkout_url());?>" />
+		<a class="btn-login text-end" href="<?php echo esc_url(home_url('/user-register'));?>">cadastrar</a>
 	</div>
 </form>
