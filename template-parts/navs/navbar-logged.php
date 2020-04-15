@@ -14,7 +14,7 @@
             array(
                 'theme_location' => 'user',
                 'container'      => false,
-                'menu_class'     => 'nav form-login',
+                'menu_class'     => 'nav form-login menu-logged',
                 'menu_id'        => 'menu-user',
                 'fallback_cb'    => false
             )
