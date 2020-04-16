@@ -9,4 +9,4 @@
  * 
  */
 
-get_sidebar( 'shop' );
+get_sidebar('shop');

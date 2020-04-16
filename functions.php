@@ -256,9 +256,17 @@ add_action('wp_head', 'aquarela_favicon');
  * Adiciona a meta tag de rastreamento do Analytics
  * 
  */
-function gtag_analytics(){
-    // Adicione o código aqui
-}
+function gtag_analytics(){?>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163773456-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-163773456-1');
+    </script>
+<?php }
 
 /**
  * 

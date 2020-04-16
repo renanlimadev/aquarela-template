@@ -58,8 +58,8 @@
             </div>
             <div class="row py-3 row-enterprise">
                 <div class="col-md-4">
-                    <p class="py-1 empresa">AQUARELA COMERCIO DE VESTUARIOS E ACESSOIOS EIRELI ME - 21.865.842/0002-67 | Av. Nossa Senhora de Lourdes, 63 - Jardim das Américas, Curitiba/PR</p>
-                    <p class="py-1 empresa">Contato:<br/>E-mail: contato@aquarelastore.com.br<br/>Telefone: (41) 3311-1689<br/>WhatsApp: +55 41 98760-2324</p>
+                    <p class="py-1 empresa">AQUARELA COMERCIO DE VESTUARIOS E ACESSOIOS EIRELI ME - 21.865.842/0001-86 | Rua Francisco Derosso, 3480 Xaxim, Curitiba/PR - 81.830-285</p>
+                    <p class="py-1 empresa">Contato:<br/>E-mail: contato@aquarelastore.com.br<br/>Telefone: (41) 3084-2280<br/>WhatsApp: +55 41 98760-2324</p>
                 </div>
                 <div class="col-md-5">
 
