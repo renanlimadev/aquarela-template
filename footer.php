@@ -57,14 +57,19 @@
                 </div>
             </div>
             <div class="row py-3 row-enterprise">
-                <div class="col-md-4">
+                <div class="col-md-4 pb-2">
                     <p class="py-1 empresa">AQUARELA COMERCIO DE VESTUARIOS E ACESSOIOS EIRELI ME - 21.865.842/0001-86 | Rua Francisco Derosso, 3480 Xaxim, Curitiba/PR - 81.830-285</p>
                     <p class="py-1 empresa">Contato:<br/>E-mail: contato@aquarelastore.com.br<br/>Telefone: (41) 3084-2280<br/>WhatsApp: +55 41 98760-2324</p>
                 </div>
-                <div class="col-md-5">
-
+                <div class="col-md-5 pb-2">
+                    <div class="pb-3">
+                        <h5 class="title-footer pb-1">Formas de Pagamento</h5>
+                        <img class="img-fluid" src="<?php echo bloginfo('template_url');?>/assets/images/bandeiras-totais.svg" alt="Formas de pagamento"/>
+                    </div>
+                    <h5 class="title-footer pb-1">Formas de Envio</h5>
+                    <img class="img-fluid" src="<?php echo bloginfo('template_url');?>/assets/images/correios.png" alt="Formas de envio"/>
                 </div>
-                <div class="col-md-3 encrypt my-auto">
+                <div class="col-md-3 encrypt my-auto pb-2">
                     <div class="row text-center align-items-center">
                         <a class="img-fluid" href="https://letsencrypt.org/pt-br/" terget="_blank"><img src="<?php bloginfo('template_url')?>/assets/icons/lets-encrypt.svg" alt="Certificado de segurança Let's Encrypt"/></a>
                     </div>
