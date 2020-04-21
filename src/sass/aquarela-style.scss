@@ -296,3 +296,21 @@ body, header, main, footer, section, aside, input, textarea, form, span, ol, ul,
 .warning-found{
     font-size: 1.2rem !important;
 }
+
+.d-mobile{
+    @media(min-width: 992px){
+        display: none !important;
+    }
+    @media(min-width: 1200px){
+        display: none !important;
+    }
+}
+
+.d-desktop{
+    @media(max-width: 575.98px){
+        display: none !important;
+    }
+    @media(max-width: 767.98px){
+        display: none !important;
+    }
+}

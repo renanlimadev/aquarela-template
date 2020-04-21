@@ -11,6 +11,20 @@
 
 /**
  * 
+ * Ativa a integração com a api do vetor
+ * 
+ */
+require_once get_template_directory(). '/inc/functions/vetor-api.php';
+
+/*
+ *
+ *Chamada ao arquivo que personaliza as funcionalidades do WooCommerce
+ *
+ */
+require_once get_template_directory(). '/inc/functions/woocommerce-functions.php';
+
+/**
+ * 
  * Suporte para miniaturas
  *  
  */
@@ -74,9 +88,6 @@ function get_excerpt(){
 	$excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
 	return $excerpt;
 }
-
-// Chamada ao arquivo que personaliza as funcionalidades do WooCommerce
-require_once get_template_directory(). '/inc/functions/woocommerce-functions.php';
 
 /**
  * 

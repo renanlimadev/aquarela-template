@@ -17,7 +17,7 @@
 
             <h3 class="product-title card-title font-weight-bold"><?php the_title();?></h3>
             <?php 
-            GLOBAL $product;
+            GLOBAL $product, $post;
 
             $price                 = $product->get_price();
             $regular_price         = $product->get_regular_price();
