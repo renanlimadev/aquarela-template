@@ -37,47 +37,64 @@ function setup_integration_with_vetor(){
 
     curl_close($ch);
 
-    $vetor_products  = json_decode($product_json, true);  
+    $vetor_products  = json_decode($product_json, true);
+
+    /**
+     * 
+     * Cria a matriz
+     * 
+     */
+    $update_products = array(
+        'ID'                 => false,
+        'post_author'        => get_current_user_id(),
+        'post_content'       => false,
+        'post_title'         => false,
+        'post_excerpt'       => false,
+        'post_status'        => 'publish',
+        'post_type'          => 'product',
+        'post_name'          => false,
+        'price'              => false,
+        'sale_price'         => false,
+        'description'        => false,
+        'short_description'  => false,
+        'catalog_visibility' => 'visible',
+        'sku'                => false,
+        'status'             => 'publish',
+        'stcok_status'       => 'instock',
+        'stock_quantity'     => false,
+        'weight'             => false,
+        'length'             => false,
+        'width'              => false,
+        'heigth'             => false,
+        'name'               => false,
+        'slug'               => false
+    );
 
     foreach($vetor_products['Produtos'] as $the_product):
         foreach($the_product as $total_products => $value):
 
+            /**
+             *
+             * Recupera o id do json
+             *
+             */
             if($total_products == 'cod_produto'):
                 $product_id = $value;
             endif;
 
-            if(get_the_ID() == $product_id):
+            /**
+             *
+             * Inicia uma busca pelo post ID
+             *
+             */
+            $query_post_id    = array('s' => $product_id);
+            $serch_post_by_id = new WP_Query($query_post_id);
+            $total_to_search  = $serch_post_by_id->found_ṕosts;
+
+            if(get_the_ID() == $product_id){
             
-                    /**
-                     * 
-                     * Cria a matriz
-                     * 
-                     */
-                    $update_products = array(
-                        'ID'                 => false,
-                        'post_author'        => get_current_user_id(),
-                        'post_content'       => false,
-                        'post_title'         => false,
-                        'post_excerpt'       => false,
-                        'post_status'        => 'publish',
-                        'post_type'          => 'product',
-                        'post_name'          => false,
-                        'price'              => false,
-                        'sale_price'         => false,
-                        'description'        => false,
-                        'short_description'  => false,
-                        'catalog_visibility' => 'visible',
-                        'sku'                => false,
-                        'status'             => 'publish',
-                        'stcok_status'       => 'instock',
-                        'stock_quantity'     => false,
-                        'weight'             => false,
-                        'length'             => false,
-                        'width'              => false,
-                        'heigth'             => false,
-                        'name'               => false,
-                        'slug'               => false
-                    );
+                    
+                    
 
                     /**
                      *
@@ -126,41 +143,9 @@ function setup_integration_with_vetor(){
                     if($total_products == 'altura'){
                         $update_products['heigth'] = strval($value);
                     }
-
-                    wp_update_post($update_products);
                
-            elseif(!(get_the_ID() == $product_id)):
+            }elseif(get_the_ID() != $product_id && $total_to_search == 0){
 
-                    /**
-                     * 
-                     * Cria a matriz
-                     * 
-                     */
-                    $new_product = array(
-                        'ID'                 => false,
-                        'post_author'        => get_current_user_id(),
-                        'post_content'       => false,
-                        'post_title'         => false,
-                        'post_excerpt'       => false,
-                        'post_status'        => 'publish',
-                        'post_type'          => 'product',
-                        'post_name'          => false,
-                        'price'              => false,
-                        'sale_price'         => false,
-                        'description'        => false,
-                        'short_description'  => false,
-                        'catalog_visibility' => 'visible',
-                        'sku'                => false,
-                        'status'             => 'publish',
-                        'stcok_status'       => 'instock',
-                        'stock_quantity'     => false,
-                        'weight'             => false,
-                        'length'             => false,
-                        'width'              => false,
-                        'heigth'             => false,
-                        'name'               => false,
-                        'slug'               => false
-                    );
 
                     /**
                      *
@@ -210,9 +195,18 @@ function setup_integration_with_vetor(){
                         $new_product['heigth'] = strval($value);
                     }
 
-                    wp_insert_post($new_product);
-            endif;
+            }
         endforeach;
+
+        if(get_the_ID() == $product_id){
+
+             wp_update_post($update_products);
+
+        }elseif(get_the_ID() != $product_id && $total_to_search == 0){
+
+            wp_insert_post($new_product);
+
+        }
     endforeach;
     }
 
