@@ -16,6 +16,10 @@
  */
 require_once get_template_directory(). '/inc/functions/vetor-api.php';
 
+if(! function_exists('post_exists')){
+    require_once(ABSPATH. 'wp-admin/includes/post.php');
+}
+
 /*
  *
  *Chamada ao arquivo que personaliza as funcionalidades do WooCommerce

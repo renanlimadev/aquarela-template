@@ -1,213 +1,156 @@
 <?php 
 /**
- * 
- * Arquivamento de tratamento da requisição da api do ERP Vetor
- * 
+ *
+ * Integração com a API do Vetor ERP
+ *
  * @package aquarela-template
- * 
+ *
  * @since 1.0.0
- * 
+ *
  */
-
-function setup_integration_with_vetor(){
-
-    GLOBAL $product, $woocommerce;
+function vetor_integration(){
 
     /**
-     * 
-     * Retorna os dados da api para um objeto json
-     * 
+     *
+     * Retorna uma matriz json a parir da requisição da API do vetor ERP
+     *
      */
-    $vetor_token    = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBUUtELTU3NDkiLCJleHAiOjE5MDI4NTUxNjUsInJvbCI6WyJST0xFX1VTRVIiXX0.K3RKyAs9WZ-Brk4uuPtw1a_mKIVUkhyO-iEzjSMvEFcGQ1ybqHBbtmwvnqM6KWH_9MAnHJZBxcejsbLZCC3xgg';
-    $vetor_url      = 'https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados';
-
-    $ch  = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $vetor_url);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Authorization: Bearer '. $vetor_token,
-        'Content-Type: application/json'
-    ));
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $product_json = curl_exec($ch);
-
-    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    curl_close($ch);
-
-    $vetor_products  = json_decode($product_json, true);
-
-    /**
-     * 
-     * Cria a matriz
-     * 
-     */
-    $update_products = array(
-        'ID'                 => false,
-        'post_author'        => get_current_user_id(),
-        'post_content'       => false,
-        'post_title'         => false,
-        'post_excerpt'       => false,
-        'post_status'        => 'publish',
-        'post_type'          => 'product',
-        'post_name'          => false,
-        'price'              => false,
-        'sale_price'         => false,
-        'description'        => false,
-        'short_description'  => false,
-        'catalog_visibility' => 'visible',
-        'sku'                => false,
-        'status'             => 'publish',
-        'stcok_status'       => 'instock',
-        'stock_quantity'     => false,
-        'weight'             => false,
-        'length'             => false,
-        'width'              => false,
-        'heigth'             => false,
-        'name'               => false,
-        'slug'               => false
+    $vetor_header = array(
+        'headers' => array(
+            'Authorization' => 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBUUtELTU3NDkiLCJleHAiOjE5MDI4NTUxNjUsInJvbCI6WyJST0xFX1VTRVIiXX0.K3RKyAs9WZ-Brk4uuPtw1a_mKIVUkhyO-iEzjSMvEFcGQ1ybqHBbtmwvnqM6KWH_9MAnHJZBxcejsbLZCC3xgg',
+            'Content-Type'  => 'application/json',
+            'sslverify'     => false
+        )
     );
+    $vetor_response = wp_remote_get('https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados', $vetor_header);
+    if( wp_remote_retrieve_response_message($vetor_response) == 'OK'){
+        $result = json_decode(wp_remote_retrieve_body($vetor_response), true);
+        
+        $produtos = $result['Produtos'];
+        $codigos  = $result['CodigosBarra'];
 
-    foreach($vetor_products['Produtos'] as $the_product):
-        foreach($the_product as $total_products => $value):
+        foreach($produtos as $produto){
 
-            /**
-             *
-             * Recupera o id do json
-             *
-             */
-            if($total_products == 'cod_produto'):
-                $product_id = $value;
-            endif;
+            // ID para manipulação
+            $cod_produto = false;
 
-            /**
-             *
-             * Inicia uma busca pelo post ID
-             *
-             */
-            $query_post_id    = array('s' => $product_id);
-            $serch_post_by_id = new WP_Query($query_post_id);
-            $total_to_search  = $serch_post_by_id->found_ṕosts;
+            // Elementos utilizados
+            $elementos_produto = array();
 
-            if(get_the_ID() == $product_id){
-            
-                    
-                    
+            foreach($produto as $key => $value){
 
-                    /**
-                     *
-                     * Alimenta a matriz
-                     *
-                     */
-                    if($total_products == 'cod_produto'){
-                        $update_products['ID'] = $value;
+                /**
+                 *
+                 * Condicional para elemntos contidos em $produto
+                 *
+                 */
+                if($key == 'cod_produto'){
+                    $cod_produto = $value;
+                    $elementos_produto['ID'] = $value;
+                }elseif($key == 'nome_produto'){
+                    $elementos_produto['name'] = $value;
+                }elseif($key == 'vl_venda_vista'){
+                    $elementos_produto['price'] = strval($value);
+                }elseif($key == 'dsc_produto_web'){
+                    $elementos_produto['description'] = $value;
+                }elseif($key == 'peso_bruto'){
+                    $elementos_produto['weight'] = strval($value);
+                }elseif($key == 'comprimento'){
+                    $elementos_produto['length'] = strval($value);
+                }elseif($key == 'largura'){
+                    $elementos_produto['width'] = strval($value);
+                }elseif($key == 'altura'){
+                    $elementos_produto['height'] = strval($value);
+                }elseif($key == 'dsc_referencia'){
+                    $elementos_produto['sku'] = strval($value);
+                }
+
+                /**
+                 *
+                 * Elementos contidos em Codigos
+                 *
+                 */
+                foreach($codigos as $codigo){
+                    foreach($codigo as $ckey => $cvalue){
+                        if($ckey == 'cod_produto'){
+                            $compare = $value;
+                        }
+                        if($ckey == 'qnt_estoque_disponivel' && $compare == $cod_produto){
+                            $elementos_produto['stock_quantity'] = $cvalue;
+                        }
                     }
-
-                    if($total_products == 'dsc_produto_web'){
-                        $update_products['post_content']      = $value;
-                        $update_products['post_excerpt']      = $value;
-                        $update_products['description']       = $value;
-                        $update_products['short_description'] = $value;
-                    }
-
-                    if($total_products == 'nome_produto'){
-                        $update_products['post_title'] = $value;
-                        $update_products['name']       = $value;
-                        $update_products['post_name']  = strtolower(str_replace(' ', '-', $value));
-                        $update_products['slug']       = strtolower(str_replace(' ', '-', $value));
-                    }
-
-                    if($total_products == 'vl_venda_vista'){
-                        $update_products['price']      = strval($value);
-                        $update_products['sale_price'] = strval($value);
-                    }
-
-                    if($total_products == 'dsc_referencia'){
-                        $update_products['sku'] = strval($value);
-                    }
-
-                    if($total_products == 'peso_bruto'){
-                        $update_products['weight'] = strval($value);
-                    }
-
-                    if($total_products == 'comprimento'){
-                        $update_products['length'] = strval($value);
-                    }
-
-                    if($total_products == 'largura'){
-                        $update_products['width'] = strval($value);
-                    }
-
-                    if($total_products == 'altura'){
-                        $update_products['heigth'] = strval($value);
-                    }
-               
-            }elseif(get_the_ID() != $product_id && $total_to_search == 0){
-
-
-                    /**
-                     *
-                     * Alimenta a matriz
-                     *
-                     */
-                    if($total_products == 'cod_produto'){
-                        $new_product['ID'] = $value;
-                    }
-
-                    if($total_products == 'dsc_produto_web'){
-                        $new_product['post_content']      = $value;
-                        $new_product['post_excerpt']      = $value;
-                        $new_product['description']       = $value;
-                        $new_product['short_description'] = $value;
-                    }
-
-                    if($total_products == 'nome_produto'){
-                        $new_product['post_title'] = $value;
-                        $new_product['name']       = $value;
-                        $new_product['post_name']  = strtolower(str_replace(' ', '-', $value));
-                        $new_product['slug']       = strtolower(str_replace(' ', '-', $value));
-                    }
-
-                    if($total_products == 'vl_venda_vista'){
-                        $new_product['price']      = strval($value);
-                        $new_product['sale_price'] = strval($value);
-                    }
-
-                    if($total_products == 'dsc_referencia'){
-                        $new_product['sku'] = strval($value);
-                    }
-
-                    if($total_products == 'peso_bruto'){
-                        $new_product['weight'] = strval($value);
-                    }
-
-                    if($total_products == 'comprimento'){
-                        $new_product['length'] = strval($value);
-                    }
-
-                    if($total_products == 'largura'){
-                        $new_product['width'] = strval($value);
-                    }
-
-                    if($total_products == 'altura'){
-                        $new_product['heigth'] = strval($value);
-                    }
-
+                }
             }
-        endforeach;
 
-        if(get_the_ID() == $product_id){
+            $retorno_post = post_exists($cod_produto, '', '', 'product');
 
-             wp_update_post($update_products);
+            $stock_status = ($elementos_produto['stock_quantity'] == 0)? 'outstock' : 'instock';
 
-        }elseif(get_the_ID() != $product_id && $total_to_search == 0){
+            if($retorno_post == 0){
+                /**
+                 *
+                 * Atualiza os produtos via solicitação da API do WooCommerce
+                 *
+                 */
+                $woocommerce_header = array(
+                    'method'  => 'PUT',
+                    'headers' => array(
+                        'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
+                    ),
+                    'body'    => array(
+                        'name'               => $elementos_produto['name'],
+                        'price'              => $elementos_produto['price'],
+                        'regular_price'      => $elementos_produto['price'],
+                        'stock_status'       => $stock_status,
+                        'catalog_visibility' => 'visible',
+                        'stock_quantity'     => $elementos_produto['stock_quantity'],
+                        'description'        => $elementos_produto['description'],
+                        'weight'             => $elementos_produto['weight'],
+                        'length'             => $elementos_produto['length'],
+                        'width'              => $elementos_produto['width'],
+                        'height'             => $elementos_produto['height'],
+                        'sku'                => $elementos_produto['sku']
+                    )
+                );
 
-            wp_insert_post($new_product);
+                $woocommerce_response = wp_remote_post(esc_url(home_url('/wc-api/v3/products'. $elementos_produto['ID'])), $woocommerce_header);
+            }else{
 
+                /**
+                 *
+                 * Atualiza os produtos via solicitação da API do WooCommerce
+                 *
+                 */
+                $woocommerce_header = array(
+                    'headers' => array(
+                        'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
+                    ),
+                    'body'    => array(
+                        'ID'                 => $elementos_produto['ID'],
+                        'name'               => $elementos_produto['name'],
+                        'price'              => $elementos_produto['price'],
+                        'regular_price'      => $elementos_produto['price'],
+                        'catalog_visibility' => 'visible',
+                        'stock_status'       => $stock_status,
+                        'stock_quantity'     => $elementos_produto['stock_quantity'],
+                        'description'        => $elementos_produto['description'],
+                        'weight'             => $elementos_produto['weight'],
+                        'length'             => $elementos_produto['length'],
+                        'width'              => $elementos_produto['width'],
+                        'height'             => $elementos_produto['height'],
+                        'sku'                => $elementos_produto['sku']
+                    )
+                );
+
+                $woocommerce_response = wp_remote_post(esc_url(home_url('/wc-api/v3/products')), $woocommerce_header);
+            }
         }
-    endforeach;
     }
+}
 
-add_action('init', 'setup_integration_with_vetor');
+/**
+ *
+ * Ativa na inicialização do tema
+ *
+ */
+add_action('init', 'vetor_integration');
