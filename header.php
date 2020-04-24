@@ -84,3 +84,6 @@
             </header>
             <?php get_template_part('template-parts/navs/navbar', 'top');?>
         </div>
+        <div class="container-fluid px-0 mb-3">
+            <img src="<?php echo bloginfo('template_url');?>/assets/images/imagem-carrossel-momi.png"/>
+        </div>
