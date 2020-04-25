@@ -72,7 +72,7 @@ function custom_api_vetor_integration(){
         		$wc_header = array(
         			'method'  => 'PUT',
 	        		'headers' => array(
-	        			'Authorization' => 'Basic ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a',
+	        			'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
 	        			'Content-Type'  => 'application/json'
 	        		),
 	        		'body'    => array(
@@ -103,7 +103,7 @@ function custom_api_vetor_integration(){
 
         		$wc_header = array(
 	        		'headers' => array(
-	        			'Authorization' => 'Basic ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a',
+	        			'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
 	        			'Content-Type'  => 'application/json'
 	        		),
 	        		'body'    => array(
