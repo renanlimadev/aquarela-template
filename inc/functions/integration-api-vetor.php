@@ -24,7 +24,7 @@ function custom_api_vetor_integration(){
 
     $vetor_response = wp_remote_get('https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados', $vetor_header);
 
-    if(wp_remote_retrieve_response_message($vetor_response) == 'OK'){
+    
         $result = json_decode(wp_remote_retrieve_body($vetor_response), true);
    
         $produtos = $result['Produtos'];
@@ -135,7 +135,7 @@ function custom_api_vetor_integration(){
         	$contador = $contador + 1;
         	
         }
-    }
+    
 }
 
 /**
