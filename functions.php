@@ -14,7 +14,7 @@
  * Ativa a integração com a api do vetor
  * 
  */
-require_once get_template_directory(). '/inc/functions/vetor-api.php';
+require_once get_template_directory(). '/inc/functions/integration-api-vetor.php';
 
 /*
  *
