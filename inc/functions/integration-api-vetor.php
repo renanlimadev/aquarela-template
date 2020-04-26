@@ -67,6 +67,8 @@ function custom_api_vetor_integration(){
         	 */
         	$return_product = wc_get_product($return_id);
 
+        	$preco[$contador] = $produto. 0;
+
         	if(is_object($return_product)){
 
         		$wc_header = array(
@@ -83,7 +85,7 @@ function custom_api_vetor_integration(){
 	        			'catalog_visibility' => 'visible',
 	        			'description'        => $produto['dsc_produto_web'],
 	        			'sku'                => strval($produto['dsc_referencia']),
-	        			'regular_price'      => strval($produto['vl_venda_vista']),
+	        			'regular_price'      => strval($preco[$contador]),
 	        			'virtual'            => false,
 	        			'downloadable'       => false,
 	        			'stock_quantity'     => $estoque[$contador],
@@ -114,7 +116,7 @@ function custom_api_vetor_integration(){
 	        			'catalog_visibility' => 'visible',
 	        			'description'        => $produto['dsc_produto_web'],
 	        			'sku'                => strval($produto['dsc_referencia']),
-	        			'regular_price'      => strval($produto['vl_venda_vista']),
+	        			'regular_price'      => strval($preco[$contador]),
 	        			'virtual'            => false,
 	        			'downloadable'       => false,
 	        			'stock_quantity'     => $estoque[$contador],
@@ -143,4 +145,4 @@ function custom_api_vetor_integration(){
  * Ativa o Hook de carregamento
  *
  */
-add_action('loaded', 'custom_api_vetor_integration');
+add_action('init', 'custom_api_vetor_integration');
