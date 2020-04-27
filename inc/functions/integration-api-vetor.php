@@ -1,7 +1,7 @@
 <?php 
 /**
  *
- * Integração via API's com o vetor e o WooCommerce
+ * Integração com a API Json do vetor para a manutenção dos produtos
  *
  * @package aquarela-template
  *
@@ -25,124 +25,71 @@ function custom_api_vetor_integration(){
     $vetor_response = wp_remote_get('https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados', $vetor_header);
 
     
-        $result = json_decode(wp_remote_retrieve_body($vetor_response), true);
+    $resultado = json_decode(wp_remote_retrieve_body($vetor_response), true);
    
-        $produtos = $result['Produtos'];
-        $codigos  = $result['CodigosBarra'];
+    $produtos  = $resultado['Produtos'];
+    $codigos   = $resultado['CodigosBarra'];
+    $contador1 = 0;
+    $contador2 = 0;
 
-        /**
-         *
-         * Inicia a manipulação dos dados retornados
-         *
-         */
-        $contador = 0;
+    /**
+     *
+     * Cria um array com a quantidade de estoque
+     *
+     */
+    foreach($codigos as $codigo){
 
-        foreach($codigos as $codigo){
+    	$estoque[$contador1] = $codigo['qnt_estoque_disponivel'];
 
-        	$estoque[$contador] = $codigo['qnt_estoque_disponivel'];
+    	$contador1 = $contador1 + 1;
+    }
 
-        	$contador = $contador + 1;
-        }
+    /**
+     *
+     * Faz o update dos produtos
+     *
+     */
+    foreach($produtos as $produto){
 
-        /**
-         *
-         * Reinicia o contador
-         *
-         */
-        $contador = 0;
+    	$id_produto = wc_get_product_id_by_sku($estoque[$contador2]);
 
-        foreach($produtos as $produto){
+    	$produto_cadastrado = wc_get_product($id_produto);
 
-        	/**
-        	 *
-        	 * Retorna o ID do produto pelo SKU
-        	 *
-        	 */
-        	$return_id = wc_get_product_id_by_sku($produto['dsc_referencia']);
+    	if($produto['is_fora_linha']){
+    		$catalogo = 'visible';
+    	}else{
+    		$catalogo = 'hide';
+    	}
 
-        	/**
-        	 *
-        	 * Retorna o produto em forma de objeto
-        	 *
-        	 */
-        	$return_product = wc_get_product($return_id);
+    	if(is_object($produto_cadastrado)){
 
-        	$preco[$contador] = $produto. 0;
+    		$preco       = $produto['vl_venda_vista']. 0;
+    		$dsc_produto = ucfirst(strtolower($produto['dsc_produto_web']));
 
-        	if(is_object($return_product)){
+    		if($estoque[$contador2] <= 0){
+    			$status_estoque = 'outofstock';
+    		}else{
+    			$status_estoque = 'instock';
+    		}
 
-        		$wc_header = array(
-        			'method'  => 'PUT',
-	        		'headers' => array(
-	        			'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
-	        			'Content-Type'  => 'application/json'
-	        		),
-	        		'body'    => array(
-	        			'name'               => ucfirst(strtolower($produto['nome_produto'])),
-	        			'slug'               => str_replace(' ', '-', strtolower($produto['nome_produto'])),
-	        			'type'               => 'simple',
-	        			'status'             => 'publish',
-	        			'catalog_visibility' => 'visible',
-	        			'description'        => $produto['dsc_produto_web'],
-	        			'sku'                => strval($produto['dsc_referencia']),
-	        			'regular_price'      => strval($preco[$contador]),
-	        			'virtual'            => false,
-	        			'downloadable'       => false,
-	        			'stock_quantity'     => $estoque[$contador],
-	        			'stock_status'       => ($estoque[$contador] >= 1) ? 'instock' : 'outofstock',
-	        			'weight'             => strval($produto['peso_bruto']),
-	        			'dimensions'         => array(
-	        				'length' => strval($produto['comprimento']),
-	        				'width'  => strval($produto['largura']),
-	        				'height' => strval($produto['altura'])
-	        			)
-	        		)
-        		);
+    		update_post_meta($id_produto, '_catalog_visibility', $catalogo);
+    		update_post_meta($id_produto, '_stock_status', $status_estoque);
+    		update_post_meta($id_produto, '_regular_price', strval($preco));
+    		update_post_meta($id_produto, '_description', $dsc_produto);
+    		update_post_meta($id_produto, '_weight', strval($produto['peso_bruto']));
+    		update_post_meta($id_produto, '_length', strval($produto['comprimento']));
+    		update_post_meta($id_produto, '_width', strval($produto['largura']));
+    		update_post_meta($id_produto, 'height', strval($produto['altura']));
+    		update_post_meta($id_produto, '_stock_quantity', $estoque[$contador2]);
+    	}
 
-        		wp_remote_post('https://aquarelastore.com.br/wp-json/wc/v3/products/'. $return_id, $wc_header);
-
-        	}else{
-
-        		$wc_header = array(
-	        		'headers' => array(
-	        			'Authorization' => 'Basic '. base64_encode('ck_6cd66a0b48664e0ad18d497334de60dc30e1d140:cs_56dc27805b2a6440608960ab0da094fd06cff48a'),
-	        			'Content-Type'  => 'application/json'
-	        		),
-	        		'body'    => array(
-	        			'name'               => ucfirst(strtolower($produto['nome_produto'])),
-	        			'slug'               => str_replace(' ', '-', strtolower($produto['nome_produto'])),
-	        			'type'               => 'simple',
-	        			'status'             => 'publish',
-	        			'catalog_visibility' => 'visible',
-	        			'description'        => $produto['dsc_produto_web'],
-	        			'sku'                => strval($produto['dsc_referencia']),
-	        			'regular_price'      => strval($preco[$contador]),
-	        			'virtual'            => false,
-	        			'downloadable'       => false,
-	        			'stock_quantity'     => $estoque[$contador],
-	        			'stock_status'       => ($estoque[$contador] >= 1) ? 'instock' : 'outofstock',
-	        			'weight'             => strval($produto['peso_bruto']),
-	        			'dimensions'         => array(
-	        				'length' => strval($produto['comprimento']),
-	        				'width'  => strval($produto['largura']),
-	        				'height' => strval($produto['altura'])
-	        			)
-	        		)
-        		);
-
-        		wp_remote_post('https://aquarelastore.com.br/wp-json/wc/v3/products', $wc_header);
-        	}
-        	
-
-        	$contador = $contador + 1;
-        	
-        }
-    
+    	$contador2 = $contador2 + 1;
+    }
 }
 
 /**
  *
- * Ativa o Hook de carregamento
+ * Inicia a função
  *
  */
 add_action('init', 'custom_api_vetor_integration');

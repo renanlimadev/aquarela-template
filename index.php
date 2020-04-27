@@ -33,21 +33,6 @@ get_header();?>
 
             endif; wp_reset_query();
         ?>
-    </ul><?php 
-$vetor_header = array(
-        'headers' => array(
-            'Authorization' => 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBUUtELTU3NDkiLCJleHAiOjE5MDI4NTUxNjUsInJvbCI6WyJST0xFX1VTRVIiXX0.K3RKyAs9WZ-Brk4uuPtw1a_mKIVUkhyO-iEzjSMvEFcGQ1ybqHBbtmwvnqM6KWH_9MAnHJZBxcejsbLZCC3xgg',
-            'Content-Type'  => 'application/json',
-            'sslverify'     => false
-        )
-    );
-
-    $vetor_response = wp_remote_get('https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados', $vetor_header);
-
-
-        $result = json_decode(wp_remote_retrieve_body($vetor_response), true);
-   
-        $produtos = $result['Produtos']; var_dump($produtos);
-    ?>
+    </ul>
 </main>
 <?php get_footer();
