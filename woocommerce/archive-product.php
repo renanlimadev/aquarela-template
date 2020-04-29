@@ -33,4 +33,4 @@ if(woocommerce_product_loop()):?>
 <?php endif;?>
 </main>
 
-<?php get_footer( 'shop' );
+<?php get_footer('shop');

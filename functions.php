@@ -279,9 +279,22 @@ function gtag_analytics(){?>
     </script>
 <?php }
 
+add_action('wp_head', 'gtag_analytics');
+
 /**
  * 
  * Remove a barra superior quando logado
  * 
  */
 remove_action( 'wp_footer', 'wp_admin_bar_render', 10000 );
+
+/**
+ *
+ *
+ *
+ */
+function mailchimp_popup(){?>
+    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us8.list-manage.com","uuid":"9ebe7b8e2fabe3fec00e64b9d","lid":"28e8549594","uniqueMethods":true}) })</script>
+<?php }
+
+add_action('wp_head', 'mailchimp_popup');
