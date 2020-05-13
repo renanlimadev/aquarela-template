@@ -16,7 +16,7 @@
         <?php wp_head();?>
     </head>
     <body <?php body_class();?>>
-        <div class="sticky-top" id="topBanner">
+        <div class="" id="topBanner">
             <header class="container-fluid bg-white pb-2" role="banner">
                 <div class="row">
                     <div class="col col-sm col-md col-lg col-xl text-center bg-aqua-2 py-0">

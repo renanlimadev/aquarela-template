@@ -1,19 +1,21 @@
 <?php 
 /**
- *
- * Integração com a API Json do vetor para a manutenção dos produtos
- *
+ * 
+ * Integração com o ERP vetor via API para modelagem de produtos, atributos e categorias
+ * 
  * @package aquarela-template
- *
+ * 
  * @since 1.0.0
- *
+ * 
  */
-function custom_api_vetor_integration(){
+function set_integration_vetor(){
+
+    GLOBAL $post;
 
     /**
-     *
-     * Retorna uma matriz json a parir da requisição da API do vetor ERP
-     *
+     * 
+     * Faz a requisição da API
+     * 
      */
     $vetor_header = array(
         'headers' => array(
@@ -24,72 +26,425 @@ function custom_api_vetor_integration(){
 
     $vetor_response = wp_remote_get('https://wss.mitryus.com.br:8087/wsintegracao/api/ecommerce/integracao/pacotedados', $vetor_header);
 
-    
-    $resultado = json_decode(wp_remote_retrieve_body($vetor_response), true);
-   
-    $produtos  = $resultado['Produtos'];
-    $codigos   = $resultado['CodigosBarra'];
-    $contador1 = 0;
-    $contador2 = 0;
+    /**
+     * 
+     * Retorna os dados em forma de matriz
+     * 
+     */
+    $dados = json_decode(wp_remote_retrieve_body($vetor_response), true);
 
     /**
-     *
-     * Cria um array com a quantidade de estoque
-     *
+     * 
+     * Quebra a matriz principal em pequenas matrizes intuitivas
+     * 
      */
-    foreach($codigos as $codigo){
+    $departamentos    = $dados['Departamentos']; // Usado como categoria
+    $grupos           = $dados['Grupos']; // Usado como categoria
+    $sub_grupos       = $dados['SubGrupos']; // Usado como categoria
+    $secoes           = $dados['Secoes']; // Usado como categoria
+    $estacoes         = $dados['Estacoes']; // Usado como categoria
+    $estilos          = $dados['Estilos']; // Usado como categoria
+    $cores            = $dados['Cores']; // Usado como variação de produtos
+    $tamanhos         = $dados['Tamanhos']; // Usado como variação de produtos
+    $produtos         = $dados['Produtos']; // Gerencia os dados dos produtos
+    $produto_removido = $dados['ProdutoRemovido']; // Gerencia a exclusão de produtos
+    $codigos_barra    = $dados['CodigosBarra']; // Gerencia o estoque e a diferenciação dos produtos
+    $oferta           = $dados['Oferta']; // Gerencia os preços promocionais dos produtos
+    $contador         = 0; // Contador para os laços
 
-    	$estoque[$contador1] = $codigo['qnt_estoque_disponivel'];
+    /**
+     * 
+     * Iteração para departamentos
+     * 
+     */
+    foreach($departamentos as $departamento){
 
-    	$contador1 = $contador1 + 1;
+        /**
+         * 
+         * Alimenta a váriavel corretamente com o nome da categoria
+         * 
+         */
+        $nome_departamento = ucfirst(strtolower($departamento['nome_departamento']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_departamento, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_departamento[$contador]                     = wp_insert_term($nome_departamento, 'product_cat');
+            $term_departamento[$contador]['cod_departamento'] = $departamento['cod_departamento'];
+
+        }else{
+
+            /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_departamento, 'product_cat', ARRAY_A);
+
+            $term_departamento[$contador]['term_id']          = $term_array['term_id'];
+            $term_departamento[$contador]['term_taxonomy_id'] = $term_array['term_taxonomy_id'];
+            $term_departamento[$contador]['cod_departamento'] = $departamento['cod_departamento']; 
+
+        }
+
+        $contador = $contador + 1;
+
     }
 
     /**
-     *
-     * Faz o update dos produtos
-     *
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para grupos
+     * 
+     */
+    foreach($grupos as $grupo){
+
+        /**
+         * 
+         * Alimenta a variável coretamente com o nome
+         * 
+         */
+        $nome_grupo = ucfirst(strtolower($grupo['nome_grupo']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_grupo, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_grupo[$contador]              = wp_insert_term($nome_grupo, 'product_cat');
+            $term_grupo[$contador]['cod_grupo'] = $grupo['cod_grupo'];
+
+        }else{
+
+            /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_grupo, 'product_cat', ARRAY_A);
+
+            $term_grupo[$contador]['term_id']          = $term_array['term_id'];
+            $term_grupo[$contador]['term_taxonomy_id'] = $term_array['term_taxonomy_id'];
+            $term_grupo[$contador]['cod_grupo']        = $grupo['cod_grupo'];
+
+        }
+
+        $contador = $contador + 1;
+    }
+
+    /**
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para sub-grupos
+     * 
+     */
+    foreach($sub_grupos as $sub_grupo){
+
+        /**
+         * 
+         * Alimenta a variável coretamente com o nome
+         * 
+         */
+        $nome_sub_grupo = ucfirst(strtolower($sub_grupo['nome_subgrupo']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_sub_grupo, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_sub_grupo[$contador]                 = wp_insert_term($nome_sub_grupo, 'product_cat');
+            $term_sub_grupo[$contador]['cod_subgrupo'] = $grupo['cod_subgrupo'];
+            
+
+        }else{
+
+             /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_sub_grupo, 'product_cat', ARRAY_A);
+
+            $term_sub_grupo[$contador]['term_id']          = $term_array['term_id'];
+            $term_sub_grupo[$contador]['term_taxonomy_id'] = $term_array['term_taxonomy_id'];
+            $term_sub_grupo[$contador]['cod_subgrupo']     = $sub_grupo['cod_subgrupo'];
+
+        }
+
+        $contador = $contador + 1;
+
+    }
+
+    /**
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para Seções
+     */
+    foreach($secoes as $secao){
+
+        /**
+         * 
+         * Alimenta a variável coretamente com o nome
+         * 
+         */
+        $nome_secao = ucfirst(strtolower($secao['nome_secao']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_secao, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_secao[$contador]              = wp_insert_term($nome_secao, 'product_cat');
+            $term_secao[$contador]['cod_secao'] = $secao['cod_secao'];
+
+        }else{
+
+            /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_secao, 'product_cat', ARRAY_A);
+
+            $term_secao[$contador]['term_id']          = $term_array['term_id'];
+            $term_secao[$contador]['term_taxonomy_id'] = $term_array['term_taxonomy_id'];
+            $term_secao[$contador]['cod_secao']        = $secao['cod_secao'];
+
+        }
+
+        $contador = $contador + 1;
+
+    }
+
+    /**
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para Estações
+     * 
+     */
+    foreach($estacoes as $estacao){
+
+        /**
+         * 
+         * Alimenta a variável coretamente com o nome
+         * 
+         */
+        $nome_estacao = ucfirst(strtolower($estacao['nome_estacao']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_estacao, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_estacao[$contador]                = wp_insert_term($nome_estacao, 'product_cat');
+            $term_estacao[$contador]['cod_estacao'] = $estacao['cod_estacao'];
+
+        }else{
+
+            /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_estacao, 'product_cat', ARRAY_A);
+
+            $term_estacao[$contador]['term_id']            = $term_array['term_id'];
+            $term_estacao[$contador]['term_taxonomy_id']   = $term_array['term_taxonomy_id'];
+            $term_estacao[$contador]['cod_estacao']        = $estacao['cod_estacao'];
+
+        }
+
+        $contador = $contador + 1;
+
+    }
+
+    /**
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para Estilos
+     * 
+     */
+    foreach($estilos as $estilo){
+
+        /**
+         * 
+         * Alimenta a variável coretamente com o nome
+         * 
+         */
+        $nome_estilo = ucfirst(strtolower($estilo['nome_estilo']));
+
+        /**
+         * 
+         * Viarável utilizada para condicional
+         * 
+         */
+        $cat_status = term_exists($nome_estilo, 'product_cat');
+
+        /**
+         * 
+         * Cria ou atuaiza a categoria
+         * 
+         */
+        if($cat_status == null){
+
+            /**
+             * 
+             * Registra a categoria e retorna os ID's de taxonomia e termo
+             * 
+             */
+            $term_estilo[$contador]               = wp_insert_term($nome_estilo, 'product_cat');
+            $term_estilo[$contador]['cod_estilo'] = $estilo['cod_estilo'];
+
+        }else{
+
+            /**
+             * 
+             * Recupera os dados do termo, caso já esteja registrado
+             * 
+             */
+            $term_array = get_term_by('name', $nome_estilo, 'product_cat', ARRAY_A);
+
+            $term_estilo[$contador]['term_id']            = $term_array['term_id'];
+            $term_estilo[$contador]['term_taxonomy_id']   = $term_array['term_taxonomy_id'];
+            $term_estilo[$contador]['cod_estilo']         = $estilo['cod_estilo'];
+
+        }
+
+        $contador = $contador + 1;
+
+    }
+
+    /**
+     * 
+     * Reseta o contador
+     * 
+     */
+    $contador = 0;
+
+    /**
+     * 
+     * Iteração para Produtos
      */
     foreach($produtos as $produto){
 
-    	$id_produto = wc_get_product_id_by_sku($estoque[$contador2]);
+        /**
+         * 
+         * Alimenta algumas variáveis necessárias
+         * 
+         */
+        $nome_produto = ucfirst(strtolower($produto['nome_produto']));
+        $sku          = strval($produto['dsc_referencia']);
+        $preco_venda  = strval($produto['vl_venda_vista']. 0);
 
-    	$produto_cadastrado = wc_get_product($id_produto);
-
-    	if($produto['is_fora_linha']){
-    		$catalogo = 'visible';
-    	}else{
-    		$catalogo = 'hide';
-    	}
-
-    	if(is_object($produto_cadastrado)){
-
-    		$preco       = $produto['vl_venda_vista']. 0;
-    		$dsc_produto = ucfirst(strtolower($produto['dsc_produto_web']));
-
-    		if($estoque[$contador2] <= 0){
-    			$status_estoque = 'outofstock';
-    		}else{
-    			$status_estoque = 'instock';
-    		}
-
-    		update_post_meta($id_produto, '_catalog_visibility', $catalogo);
-    		update_post_meta($id_produto, '_stock_status', $status_estoque);
-    		update_post_meta($id_produto, '_regular_price', strval($preco));
-    		update_post_meta($id_produto, '_description', $dsc_produto);
-    		update_post_meta($id_produto, '_weight', strval($produto['peso_bruto']));
-    		update_post_meta($id_produto, '_length', strval($produto['comprimento']));
-    		update_post_meta($id_produto, '_width', strval($produto['largura']));
-    		update_post_meta($id_produto, 'height', strval($produto['altura']));
-    		update_post_meta($id_produto, '_stock_quantity', $estoque[$contador2]);
-    	}
-
-    	$contador2 = $contador2 + 1;
     }
+
 }
 
 /**
- *
+ * 
  * Inicia a função
- *
+ * 
  */
-add_action('init', 'custom_api_vetor_integration');
+add_action('init', 'set_integration_vetor');

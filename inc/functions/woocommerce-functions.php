@@ -23,6 +23,7 @@ add_action('after_setup_theme', 'aqua_support_woocommerce');
 /**
  * 
  * Ativa o zoom padrão do woocommerce
+ * 
  */
 add_theme_support( 'wc-product-gallery-zoom' );
 

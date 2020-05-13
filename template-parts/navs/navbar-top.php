@@ -8,7 +8,7 @@
  * @since 1.0.0
  * 
  */?>
-<nav class="navbar navbar-expand-md navbar-dark bg-aqua py-0 text-center" role="navigation">
+<nav class="navbar navbar-expand-md navbar-dark bg-aqua bg-light py-0 text-center" role="navigation">
     <button class="navbar-toggler my-1" type="button" data-toggle="collapse" data-target="#navbarToCollapse" aria-controls="navbarToCollapse" aria-expanded="false" aria-label="Alterna navegação">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -33,6 +33,8 @@ get_header();?>
 
             endif; wp_reset_query();
         ?>
-    </ul>
+    </ul><?php 
+    
+?>
 </main>
 <?php get_footer();
